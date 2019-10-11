@@ -178,13 +178,13 @@ function Game(){
 
 
 
-
+let game
 function chooseLevel(){
     let btnEasy = document.querySelector(".easy-btn")
     let btnMedium = document.querySelector(".medium-btn")
     let btnHard = document.querySelector(".hard-btn")
     let btnOwn = document.querySelector(".own-btn")
-    let game = new Game(); 
+    game = new Game(); 
     btnEasy.addEventListener("click", function(event){
         game.difficulty = 100;
         game.hideLevels();
