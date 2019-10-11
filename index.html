@@ -18,20 +18,27 @@
         
         <article class="choose-level">
             <h2>Choose level of difficulty</h2>
+            <p>Guess between 0 and 100 (or choose your own max number).</p>
             <div class="level-container">
-            <div class="easy">
-                <p>Number of guesses: infinite</p>
-                <button class="easy-btn">Easy</button>
+                <div class="easy">
+                    <p>Number of guesses: infinite</p>
+                    <button class="easy-btn">Easy</button>
+                </div>
+                <div class="medium">
+                    <p>Number of guesses: 10</p>
+                    <button class="medium-btn">Medium</button>
+                </div>
+                <div class="hard">
+                    <p>Number of guesses: only 5</p>
+                    <button class="hard-btn">Hard</button>
+                </div>
             </div>
-            <div class="medium">
-                <p>Number of guesses: 10</p>
-                <button class="medium-btn">Medium</button>
+            <div class="your-own">
+                <p>Choose your own level of difficulty:</p>
+                <input class="counter-o" type="text" placeholder="Number of guesses">
+                <input class="max-number" type="text" placeholder="Highest possible number">
+                <button class="own-btn">Start</button>
             </div>
-            <div class="hard">
-                <p>Number of guesses: only 5</p>
-                <button class="hard-btn">Hard</button>
-            </div>
-        </div>
         </article>
         <article class="game">
             <p class="instructions">Guess a number between 1 and 100.</p>
