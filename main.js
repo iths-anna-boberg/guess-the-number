@@ -1,13 +1,14 @@
 
-function Game(difficulty){
+function Game(){
     return {
+        instructions: document.querySelector(".instructions"),
         low: `You guessed too low! Try again.`,
         high: `You guessed too high! Try again.`,
         won: "You won!",
         loose: `You loose!`,
         notNumber: "You need to write a NUMBER.",
-        number: Math.floor(Math.random()*difficulty+1),
-        difficulty,
+        difficulty: 100,
+        number: null,
         counterE: 0,
         counterM: 10,
         counterH: 5,
@@ -18,6 +19,10 @@ function Game(difficulty){
         counterText: document.querySelector(".countdown-text"),
         result: false,
 
+        startGame(difficulty){
+            this.number=Math.floor(Math.random()*difficulty+1)
+        },
+
         updateMessages(guess, number){
             this.yourGuess = guess;
             this.number = number;
@@ -26,6 +31,7 @@ function Game(difficulty){
             this.loose = `The right answer was ${this.number}, so you loose!`;
         },
         
+
         
         endScreen(result) {
             let playagain=document.querySelector(".play-again")
@@ -47,18 +53,17 @@ function Game(difficulty){
         },
         
         makeGuess(guess){
-            let instruction=document.querySelector(".instructions");
             this.updateMessages(guess, this.number)
             if (guess < this.number){
-                instruction.innerText = this.low
+                this.instructions.innerText = this.low
             }else if(guess > this.number){
-                instruction.innerText = this.high
+                this.instructions.innerText = this.high
             }
             else if(guess==this.number){
                 this.result = true;
                 this.endScreen();
             }else{
-                instruction.innerText = this.notNumber
+                this.instructions.innerText = this.notNumber
             }
             
         },
@@ -68,11 +73,12 @@ function Game(difficulty){
                 let count=document.querySelector(".counter");
                 count.innerText = this.counterE;
                 let guess=document.querySelector(".guess-input").value;
-                game.makeGuess(guess)
+                this.makeGuess(guess)
         },
         
         
         initEasy(){
+            this.startGame(100)
             this.btn.addEventListener("click", () => this.guessEasy() );
             this.inputField.addEventListener("keyup", event=>{
                 if(event.code==="Enter"){
@@ -86,7 +92,7 @@ function Game(difficulty){
             this.counterText.innerText = `You have ${this.counterM} guesses remaining`
             let guess=document.querySelector(".guess-input").value;
             if(this.counterM>0){
-                game.makeGuess(guess)
+                this.makeGuess(guess)
             }else{
                 this.result=false;
                 this.endScreen(this.result)
@@ -95,6 +101,7 @@ function Game(difficulty){
         },
         
         initMedium(){
+            this.startGame(100)
             this.counterText.innerText = ""
             this.counterText.innerText = `You have ${this.counterM} guesses remaining`
             this.btn.addEventListener("click", () => this.guessMedium() );
@@ -110,7 +117,7 @@ function Game(difficulty){
             this.counterText.innerText = `You have ${this.counterH} guesses remaining`
             let guess=document.querySelector(".guess-input").value;
             if(this.counterH>0){
-                game.makeGuess(guess)
+                this.makeGuess(guess)
             }else{
                 this.result=false;
                 this.endScreen(this.result)
@@ -119,6 +126,7 @@ function Game(difficulty){
         },
         
         initHard(){
+            this.startGame(100)
             this.counterText.innerText = ""
             this.counterText.innerText = `You have ${this.counterH} guesses remaining`
             this.btn.addEventListener("click", () => this.guessHard() );
@@ -134,7 +142,7 @@ function Game(difficulty){
             this.counterText.innerText = `You have ${this.counterO} guesses remaining`
             let guess=document.querySelector(".guess-input").value;
             if(this.counterO>0){
-                game.makeGuess(guess)
+                this.makeGuess(guess)
             }else{
                 this.result=false;
                 this.endScreen(this.result)
@@ -143,9 +151,9 @@ function Game(difficulty){
         },
 
         initOwn(counterO, difficulty){
-            let instructions = document.querySelector(".instructions")
             this.difficulty = difficulty
-            instructions.innerHTML = `Guess a number between 0 and ${this.difficulty}`
+            this.startGame(difficulty)
+            this.instructions.innerText = `Guess a number between 0 and ${this.difficulty}`
             this.counterO = counterO
             this.counterText.innerText = ""
             this.counterText.innerText = `You have ${this.counterO} guesses remaining`
@@ -176,35 +184,36 @@ function chooseLevel(){
     let btnMedium = document.querySelector(".medium-btn")
     let btnHard = document.querySelector(".hard-btn")
     let btnOwn = document.querySelector(".own-btn")
+    let game = new Game(); 
     btnEasy.addEventListener("click", function(event){
-        let game = new Game(100);
+        game.difficulty = 100;
         game.hideLevels();
         game.initEasy();
     })
     btnMedium.addEventListener("click", function(event){
-        let game = new Game(100);
+        game.difficulty = 100;
         game.hideLevels();
         game.initMedium();
     })
     btnHard.addEventListener("click", function(event){
-        let game = new Game(100);
+        game.difficulty = 100;
         game.hideLevels()
         game.initHard();
     })
     btnOwn.addEventListener("click", function (event){
         let counterO = document.querySelector(".counter-o").value
         let difficulty = document.querySelector(".max-number").value
-        let game = new Game(difficulty);
         game.hideLevels();
         game.initOwn(counterO, difficulty);
-        
+        game.difficulty = difficulty
     })
-    
-    
     
 }
 
+
 chooseLevel();
+
+
 
 
 
